@@ -1,67 +1,62 @@
-let fs = require('fs');
-let input = fs.readFileSync('/dev/stdin').toString().split('\n');
+const fs = require("fs")
+const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt"
 
-let readlineIdx = 0;
+const input = fs.readFileSync(filePath).toString().trim().split("\n")
 
-const readInput = () => input[readlineIdx++];
+const n = Number(input[0])
+const a = Number(input[1])
+let ax = 0,
+  ay = 0
+const map = Array.from(Array(n), () => new Array(n))
 
-let dx = [0, 1, 0, -1];
-let dy = [1, 0, -1, 0];
-let answerLoca = { X: 0, Y: 2 };
-function solution(table, t) {
-  let cnt = t * t;
-  let X = 0;
-  let Y = 0;
-  let nowDir = 0;
-  let moveCnt = t;
-  while (true) {
-    if (nowDir === 1) {
-      moveCnt--;
-    }
-    if (nowDir === 3) {
-      moveCnt--;
-    }
+map[parseInt(n / 2)][parseInt(n / 2)] = 1
 
-    for (let i = 0; i < moveCnt; ++i) {
-      X = X + dx[nowDir];
-      Y = Y + dy[nowDir];
-      table[X][Y] = cnt--;
-      if (table[X][Y] === findNum) {
-        answerLoca = { X, Y };
-      }
-    }
-
-
-    if (cnt === 0) {
-      return;
-    }
-    nowDir = (nowDir + 1) % 4;
+const dist = [
+  [0, 1],
+  [1, 0],
+  [0, -1],
+  [-1, 0],
+]
+let x = parseInt(n / 2)
+let y = parseInt(n / 2)
+let cnt = 2
+let dno = 3
+while (cnt <= n * n) {
+  if (a === 1) {
+    ax = parseInt(n / 2)
+    ay = parseInt(n / 2)
   }
+  if (cnt > n * n) break
+  let flagcount = 0
+  for (let i = 0; i < 4; i++) {
+    const nx = x + dist[i][0]
+    const ny = y + dist[i][1]
+    if (nx < 0 || nx === n || ny < 0 || ny === n) continue
+    if (map[nx][ny] !== undefined) flagcount++
+  }
+  if (flagcount === 1) {
+    dno = (dno + 1) % 4
+  }
+
+  x = x + dist[dno][0]
+  y = y + dist[dno][1]
+  map[x][y] = cnt
+  if (cnt === a) {
+    ax = x
+    ay = y
+  }
+  cnt++
 }
+function traverse2dArray2(arr) {
+  arr.forEach((rowArray) => {
+    let row = ""
 
-let findNum;
-function main() {
-  let t = readInput();
-  t = parseInt(t, 10);
-  findNum = parseInt(readInput(), 10);
-  let table = new Array(t + 1);
-  for (let i = 0; i < t + 1; ++i) {
-    table[i] = new Array(t).fill(0);
-  }
-  solution(table, t);
-  for (let y = 1; y < t + 1; ++y) {
-    let string = "";
-    for (let x = 0; x < t; ++x) {
-      if (x === t - 1) {
-        string += table[x][y];
-        break;
-      }
-      string += table[x][y] + ' ';
-    }
-    console.log(string);
-  }
-  console.log(answerLoca.Y, answerLoca.X + 1);
+    rowArray.forEach((column) => {
+      row += column + " "
+    })
 
+    console.log(row)
+  })
 }
-
-main();
+traverse2dArray2(map)
+console.log(ax + 1, ay + 1)
