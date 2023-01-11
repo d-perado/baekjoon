@@ -1,25 +1,22 @@
-const input = [];
+const fs = require("fs");
+const filePath = process.platform === "linux" ? "/dev/stdin" : "input.txt";
+let input = fs.readFileSync(filePath).toString().trim().split("\n");
 
-require('readline')
-  .createInterface(process.stdin, process.stdout)
-  .on('line', function (line) {
-    input.push(line.trim());
-  })
-  .on('close', function () {
-    let inputIndex = 0;
-    let t = Number(input[inputIndex++]);
-    while (t--) {
-      const N = Number(input[inputIndex++]);
-      const sortedNumbers = [...Array(N)].map(() => input[inputIndex++]).sort();
-      let prevNumLength = 0,
-        result = 'YES';
-      for (let i = 0; i < N; i++) {
-        if (sortedNumbers[i].slice(0, prevNumLength) === sortedNumbers[i - 1]) {
-          result = 'NO';
-          break;
-        }
-        prevNumLength = sortedNumbers[i].length;
-      }
-      console.log(result);
+let tc = +input[0];
+let index = 1;
+
+while (tc--) {
+  let num = +input[index++];
+  let arr = [...Array(num)].map(() => input[index++].trim()).sort();
+  let len = 0;
+  let result = "YES";
+
+  for (let i = 0; i < num; i++) {
+    if (arr[i].slice(0, len) === arr[i - 1]) {
+      result = "NO";
+      break;
     }
-  });
+    len = arr[i].length;
+  }
+  console.log(result);
+}
