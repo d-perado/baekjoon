@@ -1,53 +1,37 @@
-const readline = require('readline');
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+let input = require("fs")
+  .readFileSync(process.platform === "linux" ? "dev/stdin" : "input.txt")
+  .toString()
+  .trim()
+  .split("\n");
 
-let W, H;
-let top = []; // 석순
-let bot = []; // 종유석
-let idx = 0;
+const [n, h] = input[0].split(" ").map(Number);
+const down = Array(h + 1).fill(0);
+const up = Array(h + 1).fill(0);
 
-rl.on('line', function (line) {
-  if(!W) {
-    [W, H] = line.split(' ').map(n => +n);
-    top = Array.from({ length: H + 1 }, () => 0);
-    bot = Array.from({ length: H + 1 }, () => 0);
+for (let i = 1; i < n + 1; i++) {
+  const num = +input[i];
+  if (i % 2 === 0) {
+    up[num]++;
   } else {
-    if(idx % 2 === 0) {
-      bot[+line]++;
-    } else {
-      top[+line]++;
-    }
-    
-    if(++idx === W) rl.close();
+    down[num]++;
   }
-})
+}
 
-.on('close', function () {
-  let sum_top = [];
-  let sum_bot = [];
-  
-  for(let i = H; i > 0; i--) {
-    sum_top[i] = (sum_top[i + 1] ?? 0) + top[i];
-    sum_bot[i] = (sum_bot[i + 1] ?? 0) + bot[i];
+for (let i = h - 1; i > 0; i--) {
+  up[i] += up[i + 1];
+  down[i] += down[i + 1];
+}
+
+let maxStone = 200001;
+let cnt = 0;
+
+for (let i = 1; i < h + 1; i++) {
+  const a = down[i] + up[h - i + 1];
+  if (a < maxStone) {
+    maxStone = a;
+    cnt = 1;
+  } else if (a === maxStone) {
+    cnt++;
   }
-  
-  let min = 200000;
-  let cnt = 0;
-
-  for(let i = H; i > 0; i--) {
-    sum_bot[i] = sum_bot[i] + sum_top[H - i + 1];
-
-    if(sum_bot[i] < min) {
-      min = sum_bot[i];
-      cnt = 1;
-    } else if(sum_bot[i] === min) {
-      cnt++;
-    }
-  }
-
-  console.log(min, cnt);
-  process.exit();
-});
+}
+console.log(maxStone, cnt);
