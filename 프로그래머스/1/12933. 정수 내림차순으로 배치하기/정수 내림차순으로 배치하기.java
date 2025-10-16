@@ -8,16 +8,14 @@ class Solution {
         String thanthan="";
         char pivot = '0';
         for(int j=0;j<than.length;j++){
-            boolean[] checked = new boolean[than.length];
-            int k=0;
             for(int i = 0;i < than.length; i++){
-                if(than[i]>pivot&&!checked[i]){
+                if(than[i]>pivot){
                     pivot=than[i];
-                    checked[i]=true;
-                    k= i;
+                    than[i]='0';
                 }
+
+
             }
-            than[k]='0';
             thanthan+=pivot;
             pivot='0';
         }
