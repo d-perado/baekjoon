@@ -7,10 +7,7 @@ class Solution {
                 if(i==1){
                     answer-=1;
                     continue;}
-                if(i==2){
-                    answer +=2;
-                    continue;
-                }
+                
             for(int j=1;j<i/2+1;j++){
                 if(i % j == 0){
                     if(i/j==j){
