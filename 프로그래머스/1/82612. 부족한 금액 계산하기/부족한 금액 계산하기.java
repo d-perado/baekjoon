@@ -3,8 +3,7 @@ class Solution {
         
         long needMoney = 0;
         for(int i=1;i<=count;i++){
-            needMoney=needMoney+(price*i);
-            System.out.println(needMoney);
+            needMoney+=price*i;
         }
         
         if(needMoney>money){
