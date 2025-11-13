@@ -26,7 +26,7 @@ class Solution {
             // choice == 4면 점수 없음
         }
 
-        // 4. 결과 조합
+        //결과 조합
         StringBuilder result = new StringBuilder();
 
         // 각 지표 쌍 비교
