@@ -9,16 +9,12 @@ public class Main {
         return parents[x] = find(parents[x]);
     }
 
-    public static boolean union(int x, int y) {
+    public static void union(int x, int y) {
         x = find(x);
         y = find(y);
 
-        if (x == y) return false;
-
         if (x < y) parents[y] = x;
         else parents[x] = y;
-
-        return true;
     }
 
     public static void main(String[] args) throws IOException {
