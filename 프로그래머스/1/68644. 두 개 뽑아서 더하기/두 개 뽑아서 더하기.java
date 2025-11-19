@@ -18,6 +18,7 @@ class Solution {
                 temp.add(i);
             }
         }
+        
         int[] answer = new int[temp.size()];
         
         for(int i = 0; i < temp.size(); i++){
