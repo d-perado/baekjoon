@@ -9,7 +9,7 @@ class Solution {
         Integer max = Integer.MIN_VALUE;
         Integer min = Integer.MAX_VALUE;
         
-        for(int i=0;i<a.length;i++){
+        for(int i=0;i < a.length;i++){
             if(Integer.parseInt(a[i])>max){
                 max = Integer.parseInt(a[i]);
             }
@@ -19,9 +19,7 @@ class Solution {
         }
         
         StringBuilder sb = new StringBuilder();
-        sb.append(min);
-        sb.append(" ");
-        sb.append(max);
+        sb.append(min+" "+max);
         
         answer = sb.toString();
         
