@@ -8,7 +8,7 @@ class Main {
 
         int N = sc.nextInt();
 
-        int[] arr = {2, 1, 3, 2, 1};
+        int[] arr = {2, 1, 3, 2}; // 규칙찾기
         
         int answer = 0;
         if (N == 1) {
@@ -24,9 +24,6 @@ class Main {
         } else {
             int a = N / 5;
             int b = N % 5;
-            if(b == 0) {
-                b=4;
-            }
             answer= a + arr[b-1];
         }
 
